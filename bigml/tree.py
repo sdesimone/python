@@ -381,8 +381,9 @@ class Tree(object):
                 # when the prediction is the one given in a 1-instance node
                 if len(final_distribution.items()) == 1:
                     prediction, instances = final_distribution.items()[0]
-                    if instances == 1:
-                        return Prediction(
+                    if instances != 1 :
+                        raise Exception("Got more than one instance in single-node case")
+                    return Prediction(
                             last_node.output,
                             path,
                             last_node.confidence,
@@ -393,7 +394,7 @@ class Tree(object):
                             children=last_node.children,
                             d_min=last_node.min,
                             d_max=last_node.max)
-                # when there's more instances, sort elements by their mean
+                # when there are more instances, sort elements by their mean
                 distribution = [list(element) for element in
                                 sorted(final_distribution.items(),
                                        key=lambda x: x[0])]
@@ -467,8 +468,7 @@ class Tree(object):
 
         final_distribution = {}
         if not self.children:
-            return (merge_distributions({}, dict((x[0], x[1])
-                                                 for x in self.distribution)),
+            return (dict((x[0], x[1]) for x in self.distribution),
                     self.min, self.max, self)
         if one_branch(self.children, input_data):
             for child in self.children:
