@@ -15,11 +15,14 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-"""A BasicModel resource.
+"""A ModelFields resource.
 
-This module defines a BasicModel to hold the main information of the model
-resource in BigML. It becomes the starting point for the Model class, that
-is used for local predictions.
+This module defines ModelFields class to hold base information of BigML
+resources such as model, cluster, anomaly, etc. It becomes the starting
+point for Model, Cluster, and Anomaly classes, which are used for local
+predictions. For simplicity, "Model" is used as a placeholder to reference
+any of the above mentioned objects (i.e., check_model_structure(model)
+applies to models as well as to clusters and anomalies.)
 
 """
 import logging
